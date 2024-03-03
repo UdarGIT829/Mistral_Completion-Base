@@ -1,3 +1,8 @@
+from modules.instr_cls import instruct_template_cls
+import os
+import glob
+import importlib.util
+
 DEFAULT_CONFIG = {
     "top_k":40,	#int	The top-k value to use for sampling.	
     "top_p":0.95,	#float	The top-p value to use for sampling.	
@@ -15,30 +20,51 @@ DEFAULT_CONFIG = {
     "gpu_layers":0	#int	The number of layers to run on GPU.	
 }
 
-class instruct_template:
-    def __init__(self, name:str, template:str, replaceAmt:int, replacePrompt:list) -> None:
-        self.name = name
-        self.template = template
-        self.replaceAmt = replaceAmt
-        self.replacePrompt = replacePrompt
-    def to_entry(self):
-        return self.name, {"template":self.template, 
-        "input_amt":self.replaceAmt,
-        "prompt":self.replacePrompt}
+def load_modules_from_folder(folder_path, blacklist=None):
+    if blacklist is None:
+        blacklist = []
+    templates = []
+    # Check if the folder exists
+    if not os.path.exists(folder_path):
+        print(f"The folder {folder_path} does not exist.")
+        return templates
 
-# Create a list of instruct_template instances
-templates = [
-    instruct_template(  name="instruct template", 
-                        template="""[INST] You are a helpful AI assistant. You will think outside of the box to help the user with their request:
-#CHUNK
-[/INST]
-Assistant: "
-""", 
-                        replaceAmt=1, 
-                        replacePrompt=["#CHUNK"]
-                    ),
-    # Add more instances as needed
-]
+    # Search for Python files in the folder
+    python_files = glob.glob(os.path.join(folder_path, '*.py'))
+    
+    # Filter out blacklisted files
+    python_files = [file for file in python_files if "_template.py" in os.path.basename(file)]
+
+    for file_path in python_files:
+        # Extract module name from the file path
+        module_name = os.path.splitext(os.path.basename(file_path))[0]
+        
+        # Import module dynamically
+        spec = importlib.util.spec_from_file_location(module_name, file_path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        
+        # Assuming each module has a function or variable that returns 
+        # instruct_template_cls instance(s), e.g., get_template(). Adjust as needed.
+        if hasattr(module, 'get_template'):
+            template = module.get_template()
+            if isinstance(template, instruct_template_cls) or \
+               (isinstance(template, list) and all(isinstance(t, instruct_template_cls) for t in template)):
+                if isinstance(template, list):
+                    templates.extend(template)
+                else:
+                    templates.append(template)
+            else:
+                print(f"Module {module_name} does not provide a valid 'instruct_template_cls' object.")
+        else:
+            print(f"No 'get_template' function or variable found in {module_name}.")
+    
+    return templates
+
+
+# Pull instruct_template_cls instances
+templates = load_modules_from_folder("./modules")
+
 
 instruction_prompts = { 
 }
