@@ -1,3 +1,4 @@
+# Due to the way these are imported, this form of import is allowed 
 from modules.instr_cls import instruct_template_cls
 
 def get_template()->instruct_template_cls:

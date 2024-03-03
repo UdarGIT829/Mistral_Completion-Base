@@ -34,6 +34,7 @@ def handle_make_prompt():
 @app.route('/get_instruct_prompts', methods=['GET'])
 def get_prompts():
     response = prompt_defs.instruction_prompts
+    print(response)
 
     # Return the response as JSON
     return jsonify(response)

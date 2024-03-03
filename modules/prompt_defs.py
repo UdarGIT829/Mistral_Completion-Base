@@ -1,7 +1,56 @@
-from modules.instr_cls import instruct_template_cls
 import os
+import sys
 import glob
 import importlib.util
+
+def load_modules_from_folder(folder_path, blacklist=None):
+    if blacklist is None:
+        blacklist = ['instr_template.py', 'prompt_defs.py']
+    templates = []
+
+    # Ensure the parent directory is in sys.path
+    parent_directory = os.path.dirname(folder_path)
+    if parent_directory not in sys.path:
+        sys.path.append(parent_directory)
+
+    # Check if the folder exists
+    if not os.path.exists(folder_path):
+        print(f"The folder {folder_path} does not exist.")
+        return templates
+
+    # Search for Python files recursively in the folder
+    python_files = glob.glob(os.path.join(folder_path, '**', '*.py'), recursive=True)
+    
+    # Filter out blacklisted files
+    python_files = [file for file in python_files if os.path.basename(file) not in blacklist and "_template.py" in os.path.basename(file)]
+
+    for file_path in python_files:
+        # Temporarily add the current file's directory to sys.path
+        current_dir = os.path.dirname(file_path)
+        if current_dir not in sys.path:
+            sys.path.insert(0, current_dir)  # Add to the start to prioritize
+        
+        # Extract module name from the file path
+        module_name = os.path.splitext(os.path.basename(file_path))[0]
+        
+        # Import module dynamically
+        spec = importlib.util.spec_from_file_location(module_name, file_path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        
+        # Process the module as before
+        if hasattr(module, 'get_template'):
+            template = module.get_template()
+            if isinstance(template, list):
+                templates.extend(template)
+            else:
+                templates.append(template)
+        
+        # Remove the current file's directory from sys.path after import
+        if sys.path[0] == current_dir:
+            sys.path.pop(0)
+
+    return templates
 
 DEFAULT_CONFIG = {
     "top_k":40,	#int	The top-k value to use for sampling.	
@@ -20,49 +69,9 @@ DEFAULT_CONFIG = {
     "gpu_layers":0	#int	The number of layers to run on GPU.	
 }
 
-def load_modules_from_folder(folder_path, blacklist=None):
-    if blacklist is None:
-        blacklist = []
-    templates = []
-    # Check if the folder exists
-    if not os.path.exists(folder_path):
-        print(f"The folder {folder_path} does not exist.")
-        return templates
-
-    # Search for Python files in the folder
-    python_files = glob.glob(os.path.join(folder_path, '*.py'))
-    
-    # Filter out blacklisted files
-    python_files = [file for file in python_files if "_template.py" in os.path.basename(file)]
-
-    for file_path in python_files:
-        # Extract module name from the file path
-        module_name = os.path.splitext(os.path.basename(file_path))[0]
-        
-        # Import module dynamically
-        spec = importlib.util.spec_from_file_location(module_name, file_path)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        
-        # Assuming each module has a function or variable that returns 
-        # instruct_template_cls instance(s), e.g., get_template(). Adjust as needed.
-        if hasattr(module, 'get_template'):
-            template = module.get_template()
-            if isinstance(template, instruct_template_cls) or \
-               (isinstance(template, list) and all(isinstance(t, instruct_template_cls) for t in template)):
-                if isinstance(template, list):
-                    templates.extend(template)
-                else:
-                    templates.append(template)
-            else:
-                print(f"Module {module_name} does not provide a valid 'instruct_template_cls' object.")
-        else:
-            print(f"No 'get_template' function or variable found in {module_name}.")
-    
-    return templates
-
 
 # Pull instruct_template_cls instances
+
 templates = load_modules_from_folder("./modules")
 
 
@@ -71,6 +80,7 @@ instruction_prompts = {
 for template in templates:
     key, value = template.to_entry()
     instruction_prompts[key] = value
+
 
 def make_prompt(template_name, *inputs):
 
