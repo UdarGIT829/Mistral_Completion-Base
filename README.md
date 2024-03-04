@@ -25,10 +25,8 @@ For further usage, see `test.py` for specific examples.
 ## Modules
 To extend functionality with your own module, you must make a `get_template()` function
 See `.modules/instr_cls.py` for the class definition of the return type, or see `modules/template_module/generic_template.py` for a simplified example.
-### Production Results (Updated every push by Github Actions!)
+## Execution Results
 #### Generic Template
-```ps
->   python .\test.py
 'Processing query: Hello, how are you? I am under the water, please help me.'
 
 Using template: [INST] You are a helpful AI assistant. You will think outside of the box to help the user with their request:
@@ -36,44 +34,41 @@ Hello, how are you? I am under the water, please help me.
 [/INST]
 Assistant: "
 
+
 Response status code: 200
 Response JSON:
-{'prompt': '[INST] You are a helpful AI assistant. You will think outside of ' 
+{'prompt': '[INST] You are a helpful AI assistant. You will think outside of '
            'the box to help the user with their request:\n'
-           'Hello, how are you? I am under the water, please help me.\n'       
+           'Hello, how are you? I am under the water, please help me.\n'
            '[/INST]\n'
            'Assistant: "\n',
- 'text': "I understand that you may be in an unusual situation, but don't "    
-         "worry, I'm here to help. Can you tell me where you are exactly so I "
-         'can send assistance your way?"',
- 'tokens': 38}
+ 'text': '" Hello! Firstly, don\'t worry. It seems like you might be in a '
+         'situation where you need some assistance. Can you tell me more about '
+         "what's going on or the exact situation that you're facing? The more "
+         'information I have, the better equipped I am to help you. Remember, '
+         'I\'m here to assist you in any way I can."\n'
+         '"',
+ 'tokens': 74}
 =_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_=
-```
-
 #### CSV Parser
-```ps
->   python .\test.py
-[nltk_data] Downloading package punkt to
-[nltk_data]     C:\Users\Vudar\AppData\Roaming\nltk_data...
-[nltk_data]   Package punkt is already up-to-date!
-[nltk_data] Downloading package averaged_perceptron_tagger to
-[nltk_data]     C:\Users\Vudar\AppData\Roaming\nltk_data...  
-[nltk_data]   Package averaged_perceptron_tagger is already up-to-
-[nltk_data]       date!
 Processing Query: Get data about Theo
-Retrying bad selection: Theo s data is stored in the  Name  column
 ****************************************************************************************************
-Lookup success!
+Lookup success: Theo in Name
 [{'Name': 'Theo', 'Age': '28', 'Body Temperature': '95', 'Wealth': 'Low'}]
 ****************************************************************************************************
+
 Processing Query: Get data about Viraat
+Retrying bad selection: Column  Name
+Retrying bad selection:   Name
 ----------------------------------------------------------------------------------------------------
 Lookup fail: Viraat in Name
 ----------------------------------------------------------------------------------------------------
+
 Processing Query: Get data about 30 year olds
-Retrying bad selection: Age   This response shows that you will search for information about    year olds in the  Age  column
+Retrying bad selection: Age   The relevant column is Age because it contains information about the age of individuals
+Retrying bad selection: Age The search was done using the Age column because it directly relates to the user s query for information about individuals aged    years old
 ****************************************************************************************************
-Lookup success!
+Lookup success: 30 in Age
 [{'Name': 'Harry Kane', 'Age': '30', 'Body Temperature': '95', 'Wealth': 'Medium'}]
 ****************************************************************************************************
-```
+
