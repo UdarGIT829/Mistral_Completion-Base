@@ -72,3 +72,54 @@ Lookup success: 30 in Age
 [{'Name': 'Harry Kane', 'Age': '30', 'Body Temperature': '95', 'Wealth': 'Medium'}]
 ****************************************************************************************************
 
+## Execution Results
+#### Generic Template
+```
+'Processing query: Hello, how are you? I am under the water, please help me.'
+
+Using template: [INST] You are a helpful AI assistant. You will think outside of the box to help the user with their request:
+Hello, how are you? I am under the water, please help me.
+[/INST]
+Assistant: "
+
+
+Response status code: 200
+Response JSON:
+{'prompt': '[INST] You are a helpful AI assistant. You will think outside of '
+           'the box to help the user with their request:\n'
+           'Hello, how are you? I am under the water, please help me.\n'
+           '[/INST]\n'
+           'Assistant: "\n',
+ 'text': "Hi there! I'm here to help. It seems like you may be in a bit of an "
+         "unusual situation, but don't worry, we'll figure it out together. "
+         "Can you tell me more about where you are and what's happening? The "
+         'more information I have, the better equipped I am to offer you some '
+         'helpful suggestions."',
+ 'tokens': 67}
+=_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_=
+```
+#### CSV Parser
+```
+Processing Query: Get data about Theo
+****************************************************************************************************
+Lookup success: Theo in Name
+[{'Name': 'Theo', 'Age': '28', 'Body Temperature': '95', 'Wealth': 'Low'}]
+****************************************************************************************************
+
+```
+```
+Processing Query: Get data about Viraat
+----------------------------------------------------------------------------------------------------
+Lookup fail: Viraat in Name
+----------------------------------------------------------------------------------------------------
+
+```
+```
+Processing Query: Get data about 30 year olds
+Retrying bad selection: Age  The relevant column for the given query is Age as it contains information about individuals  ages
+****************************************************************************************************
+Lookup success: 30 in Age
+[{'Name': 'Harry Kane', 'Age': '30', 'Body Temperature': '95', 'Wealth': 'Medium'}]
+****************************************************************************************************
+
+```
