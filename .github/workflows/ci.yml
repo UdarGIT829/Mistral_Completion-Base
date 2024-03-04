@@ -70,9 +70,9 @@ jobs:
     - name: Backup README
       run: cp README.md README.backup.md
 
-    - name: Trim README after 'Production Examples'
+    - name: Trim README after 'Execution Results'
       run: |
-        sed -n '/### Production Results (Updated every push by Github Actions!)/q;p' README.md > README.tmp.md
+        sed -n '/## Execution Results/q;p' README.md > README.tmp.md
         mv README.tmp.md README.md
 
     - name: Run tests and capture output
