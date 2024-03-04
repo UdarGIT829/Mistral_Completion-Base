@@ -46,7 +46,6 @@ jobs:
       run: |
         gdown --id ${{ secrets.GOOGLE_DRIVE_FILE_ID_MISTRAL_CONFIG }} -O ./model/OpenHermes-2.5-Mistral-7B-GGUF/config.json
 
-
     - name: Start Application Server
       run: |
         nohup python3 app.py > server.log 2>&1 &
