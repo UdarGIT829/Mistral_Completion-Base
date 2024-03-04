@@ -42,12 +42,13 @@ except Exception as err:
     print(f"Error: {err}")
     
     
-    
-    
-    
-"""
+print("""
+      
 Example code for CSV Parser Instruct Template
-"""
+
+""")
+
+
 import re
 import requests
 from modules.csv_parser_module.process_csv import process_csv_headers, extract_lookup_value, find_in_csv
