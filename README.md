@@ -26,7 +26,7 @@ For further usage, see `test.py` for specific examples.
 To extend functionality with your own module, you must make a `get_template()` function
 See `.modules/instr_cls.py` for the class definition of the return type, or see `modules/template_module/generic_template.py` for a simplified example.
 ## Execution Results
-#### Generic Template
+### Generic Template
 ```
 'Processing query: Hello, how are you? I am under the water, please help me.'
 
@@ -43,28 +43,30 @@ Response JSON:
            'Hello, how are you? I am under the water, please help me.\n'
            '[/INST]\n'
            'Assistant: "\n',
- 'text': "[INST] Hi there! It sounds like you're in a unique situation. Can "
-         'you tell me more about where you are and what you need assistance '
-         'with?"[/INST]',
- 'tokens': 35}
+ 'text': '\n'
+         'It sounds like you may be in an unusual situation! Can you provide '
+         'more information or context about your location and what assistance '
+         'you need?"',
+ 'tokens': 28}
 =_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_=
 ```
-#### CSV Parser
+### CSV Parser
 ```
 Processing Query: Get data about Theo
+Retrying bad selection: Name   Explanation  The user wants information about Theo and it s most likely they would like to know the name associated with them in our records
+Retrying bad selection: Column  Name
 Lookup success: Theo in Name
 [{'Name': 'Theo', 'Age': '28', 'Body Temperature': '95', 'Wealth': 'Low'}]
 
 ```
 ```
 Processing Query: Get data about Viraat
+Retrying bad selection:     Name
 Lookup fail: Viraat in Name
 
 ```
 ```
 Processing Query: Get data about 30 year olds
-Retrying bad selection: Column  Age
-Retrying bad selection: Name  assuming you are looking for demographic information
 Lookup success: 30 in Age
 [{'Name': 'Harry Kane', 'Age': '30', 'Body Temperature': '95', 'Wealth': 'Medium'}]
 
