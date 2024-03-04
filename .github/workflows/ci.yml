@@ -40,3 +40,6 @@ jobs:
       if: always()
       run: |
         kill $(cat APP_PID)
+    - name: Print Server Log
+      if: always()
+      run: cat server.log
