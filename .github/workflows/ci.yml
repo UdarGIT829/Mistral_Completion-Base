@@ -14,6 +14,18 @@ jobs:
         fetch-depth: 0
         submodules: 'recursive'
 
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.11.7' # Adjust according to your project needs
+
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Install gdown
+      run: pip install gdown
+
     - name: Cache model
       id: cache-model
       uses: actions/cache@v3
@@ -23,20 +35,17 @@ jobs:
         restore-keys: |
           model-
 
-    - name: Download and decompress model if not cached
+    - name: Download Model from Google Drive
       if: steps.cache-model.outputs.cache-hit != 'true'
       run: |
-        curl -L "https://drive.google.com/uc?export=download&id=${{ secrets.GOOGLE_DRIVE_FILE_ID_MISTRAL_MODEL }}" -o model.7z
+        gdown 'https://drive.google.com/uc?id=${{ secrets.GOOGLE_DRIVE_FILE_ID_MISTRAL_MODEL }}' -O model.7z
         7z x model.7z -o./models
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.11.7' # Adjust according to your project needs
-
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-
+    - name: Check downloaded file
+      if: steps.cache-model.outputs.cache-hit != 'true'
+      run: |
+        ls -lh model.7z
+        file model.7z
 
     - name: Start Application Server
       run: |
