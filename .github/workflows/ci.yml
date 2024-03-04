@@ -29,7 +29,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ./model/OpenHermes-2.5-Mistral-7B-GGUF
-        key: model-${{ github.sha }}
+        key: model-2bcab7ce5ae8346d45538bf945b2536dec1eaa28
         restore-keys: |
           model-
 
