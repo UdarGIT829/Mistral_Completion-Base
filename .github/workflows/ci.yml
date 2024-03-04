@@ -60,7 +60,6 @@ jobs:
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=${{ github.workspace }}" >> $GITHUB_ENV
 
-
     - name: Run Tests
       run: |
         python3 test.py
