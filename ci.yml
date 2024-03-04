@@ -1,0 +1,31 @@
+name: CI
+
+# Triggers the workflow on push or pull request events
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        # Fetches all history for all tags and branches, including submodules
+        fetch-depth: 0
+        submodules: 'recursive'
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.11.7' # Adjust according to your project needs
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Build
+      run: |
+        # Add commands to build your project here
+        echo "Build steps go here"
+
+    - name: Test
+      run: python3 test.py
