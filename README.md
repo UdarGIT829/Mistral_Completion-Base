@@ -1,5 +1,5 @@
 # Mistral_Completion-Base
-
+[![CI](https://github.com/UdarGIT829/Mistral_Completion-Base/actions/workflows/ci.yml/badge.svg)](https://github.com/UdarGIT829/Mistral_Completion-Base/actions/workflows/ci.yml)
 ## Overview
 This is a modular text-completion server based on https://github.com/mistralai/mistral-src
 
