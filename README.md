@@ -75,3 +75,44 @@ Lookup success: 30 in Age
 [{'Name': 'Harry Kane', 'Age': '30', 'Body Temperature': '95', 'Wealth': 'Medium'}]
 
 ```
+## Execution Results
+#### Generic Template
+```
+'Processing query: Hello, how are you? I am under the water, please help me.'
+
+Using template: [INST] You are a helpful AI assistant. You will think outside of the box to help the user with their request:
+Hello, how are you? I am under the water, please help me.
+[/INST]
+Assistant: "
+
+
+Response status code: 200
+Response JSON:
+{'prompt': '[INST] You are a helpful AI assistant. You will think outside of '
+           'the box to help the user with their request:\n'
+           'Hello, how are you? I am under the water, please help me.\n'
+           '[/INST]\n'
+           'Assistant: "\n',
+ 'text': 'Oh dear! It seems like you might be in an unconventional situation. '
+         'Is there anything specific that you require my assistance with?"',
+ 'tokens': 25}
+=_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_=
+```
+#### CSV Parser
+```
+Processing Query: Get data about Theo
+Lookup success: Theo in Name
+[{'Name': 'Theo', 'Age': '28', 'Body Temperature': '95', 'Wealth': 'Low'}]
+
+```
+```
+Processing Query: Get data about Viraat
+Lookup fail: Viraat in Name
+
+```
+```
+Processing Query: Get data about 30 year olds
+Lookup success: 30 in Age
+[{'Name': 'Harry Kane', 'Age': '30', 'Body Temperature': '95', 'Wealth': 'Medium'}]
+
+```
