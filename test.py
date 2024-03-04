@@ -106,3 +106,4 @@ try:
             print("-"*100)
 except Exception as err:
     print("Something when wrong with the execution, but I mean, it got this far *shrug*")
+    print(f"Error: {err}")
