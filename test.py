@@ -109,3 +109,111 @@ try:
 except Exception as err:
     print("Something when wrong with the execution, but I mean, it got this far *shrug*")
     raise(err)
+
+
+
+
+print("""### Fightball""")
+
+
+# For the sake of clarity, print the input data of the fighters
+print("```")
+print("Input:")
+print("""fighter1 = ["John Smith", "John smith is normal human adult."]""")
+print("""fighter2 = ["Donald Trump", "Donald Trump is a normal human adult, riding a military tank."]""")
+fighter1 = ["John Smith", "John smith is normal human adult."]
+fighter2 = ["Donald Trump", "Donald Trump is a normal human adult, riding a military tank."]
+print("```")
+
+
+reponse = requests.post(url="http://127.0.0.1:9001/make_prompt", 
+    json={'template_name':"fightball character description",
+        'inputs':[fighter1[1]]
+    }
+).json()
+
+# print(f"Using template: {reponse['result']}")
+# print()
+reponse = requests.post(url="http://127.0.0.1:9001/completion", 
+    json={'text':reponse['result'],
+        'temperature':0.2
+    }
+).json()
+fighter1Description = reponse['text'] if len(reponse['text']) > len(fighter1[1]) else fighter1[1]
+
+
+fighter1.append(fighter1Description)
+
+# print()
+
+reponse = requests.post(url="http://127.0.0.1:9001/make_prompt", 
+    json={'template_name':"fightball character description",
+        'inputs':[fighter2[1]]
+    }
+).json()
+
+# print(f"Using template: {reponse['result']}")
+# print()
+reponse = requests.post(url="http://127.0.0.1:9001/completion", 
+    json={'text':reponse['result'],
+        'temperature':0.2
+    }
+).json()
+fighter2Description = reponse['text'] if len(reponse['text']) > len(fighter2[1]) else fighter2[1]
+
+
+fighter2.append(fighter2Description)
+
+print("```")
+print(fighter1[1])
+print("->")
+print(f"{fighter1[0]}: {fighter1Description}")
+print("```")
+print("```")
+print()
+
+print(fighter2[1])
+print("->")
+print(f"{fighter2[0]}: {fighter2Description}")
+print("```")
+print()
+
+reponse = requests.post(url="http://127.0.0.1:9001/make_prompt", 
+    json={'template_name':"fightball simulate",
+        'inputs':[fighter1[0],fighter1Description,fighter2[0],fighter2Description]
+    }
+).json()
+
+print(f"Using template: {reponse['result']}")
+print()
+reponse = requests.post(url="http://127.0.0.1:9001/completion", 
+    json={'text':reponse['result'],
+        'temperature':0.2
+    }
+).json()
+
+
+print("```")
+print("Simulation:")
+pprint(reponse)
+print("```")
+
+reponse = requests.post(url="http://127.0.0.1:9001/make_prompt", 
+    json={'template_name':"fightball eval",
+        'inputs':[fighter1[0],fighter2[0],reponse['text']]
+    }
+).json()
+
+print(f"Using template: {reponse['result']}")
+print()
+reponse = requests.post(url="http://127.0.0.1:9001/completion", 
+    json={'text':reponse['result'],
+        'temperature':0.2
+    }
+).json()
+
+# Eventually put a looping condition here so that if the winner is not found in the response it will resimulate the fight
+print("```")
+print("Winner:")
+pprint(reponse)
+print("```")

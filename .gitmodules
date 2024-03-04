@@ -1,3 +1,6 @@
 [submodule "modules/csv_parser_module"]
 	path = modules/csv_parser_module
 	url = https://github.com/UdarGIT829/csv_parser_module
+[submodule "modules/fightball_module"]
+	path = modules/fightball_module
+	url = https://github.com/UdarGIT829/fightball_module
