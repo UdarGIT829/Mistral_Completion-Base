@@ -25,8 +25,8 @@ For further usage, see `test.py` for specific examples.
 ## Modules
 To extend functionality with your own module, you must make a `get_template()` function
 See `.modules/instr_cls.py` for the class definition of the return type, or see `modules/template_module/generic_template.py` for a simplified example.
-
-### Generic Template
+### Production Results (Updated every push by Github Actions!)
+#### Generic Template
 ```ps
 >   python .\test.py
 'Processing query: Hello, how are you? I am under the water, please help me.'
@@ -51,7 +51,7 @@ Response JSON:
 =_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_=
 ```
 
-### CSV Parser
+#### CSV Parser
 ```ps
 >   python .\test.py
 [nltk_data] Downloading package punkt to
