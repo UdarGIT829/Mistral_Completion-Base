@@ -19,7 +19,7 @@ def mistral_completion(myText:str, config=None) -> dict:
     else:
         thisConfig = DEFAULT_CONFIG
         thisConfig.update(config)
-    llm = CTransformers(model='models\OpenHermes-2.5-Mistral-7B-GGUF\openhermes-2.5-mistral-7b.Q4_K_M.gguf', model_type="mistral", gpu_layers=50, config=thisConfig)
+    llm = CTransformers(model='./model/OpenHermes-2.5-Mistral-7B-GGUF/openhermes-2.5-mistral-7b.Q4_K_M.gguf', model_type="mistral", gpu_layers=50, config=thisConfig)
 
     response_text = llm(myText)
 
