@@ -36,7 +36,6 @@ Hello, how are you? I am under the water, please help me.
 [/INST]
 Assistant: "
 
-
 Response status code: 200
 Response JSON:
 {'prompt': '[INST] You are a helpful AI assistant. You will think outside of ' 
