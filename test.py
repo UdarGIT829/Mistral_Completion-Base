@@ -25,6 +25,8 @@ try:
                 'inputs':[query]
             }
         ).json()
+
+        print(f"Using template: {reponse['result']}")
         reponse = requests.post(url="http://127.0.0.1:9001/completion", 
             json={'text':reponse['result'],
                 'temperature':0.2
