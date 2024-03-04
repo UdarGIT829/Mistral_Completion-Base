@@ -2,11 +2,7 @@ import requests
 from pprint import pprint
 
 
-print("""
-      
-Example code for Generic Instruction Template
-
-""")
+print("""#### Generic Template""")
 
 reponse = requests.get(url="http://127.0.0.1:9001/get_instruct_prompts")
 
@@ -39,14 +35,10 @@ try:
         print("=_="*20)
 except Exception as err:
     print("Something when wrong with the Generic Template execution, but I mean, it got this far *shrug*")
-    print(f"Error: {err}")
+    raise(err)
     
     
-print("""
-      
-Example code for CSV Parser Instruct Template
-
-""")
+print("""#### CSV Parser""")
 
 
 import re
@@ -99,19 +91,21 @@ try:
                     print("Giving up :(")
                     exit()
 
-        lookup_value = extract_lookup_value(query)
+        lookup_value = extract_lookup_value(query).strip()
         # print(lookup_value)
         result = find_in_csv(filename=filename, lookup_value=lookup_value, column_name=chosen_feature)
 
         if len(result)>0:
             print("*"*100)
-            print("Lookup success!")
+            print(f"Lookup success: {lookup_value} in {chosen_feature}")
             print(result)
             print("*"*100)
+            print()
         else:
             print("-"*100)
             print(f"Lookup fail: {lookup_value} in {chosen_feature}")
             print("-"*100)
+            print()
 except Exception as err:
     print("Something when wrong with the execution, but I mean, it got this far *shrug*")
-    print(f"Error: {err}")
+    raise(err)
