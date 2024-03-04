@@ -14,6 +14,21 @@ jobs:
         fetch-depth: 0
         submodules: 'recursive'
 
+    - name: Cache model
+      id: cache-model
+      uses: actions/cache@v3
+      with:
+        path: path/to/model
+        key: model-${{ hashFiles('**/lockfile') }}
+        restore-keys: |
+          model-
+
+    - name: Download and decompress model if not cached
+      if: steps.cache-model.outputs.cache-hit != 'true'
+      run: |
+        curl -L "https://drive.google.com/uc?export=download&id=${{ secrets.GOOGLE_DRIVE_FILE_ID_MISTRAL_MODEL }}" -o model.7z
+        7z x model.7z -o./path/to/model
+
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -21,17 +36,6 @@ jobs:
 
     - name: Install dependencies
       run: pip install -r requirements.txt
-
-
-    - name: Install 7zip (if necessary)
-      run: sudo apt-get install p7zip-full
-
-    - name: Download Model from Google Drive
-      run: |
-        curl -L "https://drive.google.com/uc?export=download&id=${{ secrets.GOOGLE_DRIVE_FILE_ID_MISTRAL_MODEL }}" -o model.7z
-
-    - name: Decompress Model Archive
-      run: 7z x model.7z -o ./models
 
 
     - name: Start Application Server
