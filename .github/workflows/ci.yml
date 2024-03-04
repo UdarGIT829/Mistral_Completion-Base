@@ -30,7 +30,7 @@ jobs:
     - name: Health Check
       run: |
         sleep 10 # Wait for the server to start
-        curl --retry 5 --retry-delay 10 --retry-connrefused http://localhost:5000/health -X POST -d '{"status":"ok"}' -H "Content-Type: application/json"
+        curl --retry 5 --retry-delay 10 --retry-connrefused http://localhost:9001/health -X POST -d '{"status":"ok"}' -H "Content-Type: application/json"
     
     - name: Run Tests
       run: |
