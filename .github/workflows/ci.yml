@@ -18,7 +18,7 @@ jobs:
       id: cache-model
       uses: actions/cache@v3
       with:
-        path: path/to/model
+        path: ./models
         key: model-${{ hashFiles('**/lockfile') }}
         restore-keys: |
           model-
@@ -27,7 +27,7 @@ jobs:
       if: steps.cache-model.outputs.cache-hit != 'true'
       run: |
         curl -L "https://drive.google.com/uc?export=download&id=${{ secrets.GOOGLE_DRIVE_FILE_ID_MISTRAL_MODEL }}" -o model.7z
-        7z x model.7z -o./path/to/model
+        7z x model.7z -o ./models
 
     - name: Set up Python
       uses: actions/setup-python@v2
