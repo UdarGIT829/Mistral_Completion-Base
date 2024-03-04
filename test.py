@@ -147,7 +147,7 @@ try:
     import modules.prompt_defs
 
     # Example usage
-    filename = 'modules/csv_parser_module/data/dataset.csv'
+    filename = './modules/csv_parser_module/data/dataset.csv'
     header_info = process_csv_headers(filename)
     # print(header_info)
 
