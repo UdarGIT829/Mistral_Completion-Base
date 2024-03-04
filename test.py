@@ -14,6 +14,7 @@ prompts = reponse.json()
 querys = ["Hello, how are you? I am under the water, please help me."]
 try:
     for query in querys:
+        print("```")
         pprint(f"Processing query: {query}")
         print()
         reponse = requests.post(url="http://127.0.0.1:9001/make_prompt", 
@@ -33,6 +34,7 @@ try:
         print(f"Response JSON:")
         pprint(reponse.json())
         print("=_="*20)
+        print("```")
 except Exception as err:
     print("Something when wrong with the Generic Template execution, but I mean, it got this far *shrug*")
     raise(err)
@@ -58,6 +60,7 @@ try:
 
     querys = ["Get data about Theo", "Get data about Viraat", "Get data about 30 year olds"]
     for query in querys:
+        print("```")
         print(f"Processing Query: {query}")
 
         _features = list(header_info.keys())
@@ -106,6 +109,7 @@ try:
             print(f"Lookup fail: {lookup_value} in {chosen_feature}")
             print("-"*100)
             print()
+        print("```")
 except Exception as err:
     print("Something when wrong with the execution, but I mean, it got this far *shrug*")
     raise(err)
