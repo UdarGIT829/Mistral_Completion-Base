@@ -22,6 +22,18 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
+
+    - name: Install 7zip (if necessary)
+      run: sudo apt-get install p7zip-full
+
+    - name: Download Model from Google Drive
+      run: |
+        curl -L "https://drive.google.com/uc?export=download&id=${{ secrets.GOOGLE_DRIVE_FILE_ID_MISTRAL_MODEL }}" -o model.7z
+
+    - name: Decompress Model Archive
+      run: 7z x model.7z -o ./models
+
+
     - name: Start Application Server
       run: |
         nohup python3 app.py > server.log 2>&1 &
