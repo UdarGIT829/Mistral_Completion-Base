@@ -22,19 +22,21 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
-    - name: Build
+    - name: Start Application Server
       run: |
-        # Add commands to build your project here
-        echo "Build steps go here"
-        
-    - name: Test
+        nohup python3 app.py > server.log 2>&1 &
+        echo $! > APP_PID
+
+    - name: Health Check
       run: |
-        # Start app.py in the background
-        nohup python3 app.py &
-        APP_PID=$!
-        # Wait for 10 seconds to ensure the server is ready
-        sleep 10
-        # Run test.py while app.py is running in the background
+        sleep 10 # Wait for the server to start
+        curl --retry 5 --retry-delay 10 --retry-connrefused http://localhost:5000/health -X POST -d '{"status":"ok"}' -H "Content-Type: application/json"
+    
+    - name: Run Tests
+      run: |
         python3 test.py
-        # Kill the app.py process
-        kill $APP_PID
+    
+    - name: Cleanup
+      if: always()
+      run: |
+        kill $(cat APP_PID)
