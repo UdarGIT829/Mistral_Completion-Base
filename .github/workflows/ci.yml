@@ -26,8 +26,15 @@ jobs:
       run: |
         # Add commands to build your project here
         echo "Build steps go here"
-
+        
     - name: Test
       run: |
-        # Add commands to build your project here
-        echo "Build steps go here"
+        # Start app.py in the background
+        nohup python3 app.py &
+        APP_PID=$!
+        # Wait for 10 seconds to ensure the server is ready
+        sleep 10
+        # Run test.py while app.py is running in the background
+        python3 test.py
+        # Kill the app.py process
+        kill $APP_PID
