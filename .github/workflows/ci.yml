@@ -8,6 +8,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Check if push made by GitHub Actions bot
+      run: |
+        if [ "$GITHUB_ACTOR" = "github-actions[bot]" ]; then
+          echo "Push made by GitHub Actions bot, skipping CI run.";
+          exit 0;
+        fi
     - uses: actions/checkout@v2
       with:
         submodules: 'recursive'
