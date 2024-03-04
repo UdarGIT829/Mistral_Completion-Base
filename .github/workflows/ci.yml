@@ -9,16 +9,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        # Fetches all history for all tags and branches, including submodules
-        fetch-depth: 0
-        submodules: 'recursive'
 
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.11.7' # Adjust according to your project needs
-
+        python-version: '3.11.7'
 
     - name: Install dependencies
       run: pip install -r requirements.txt
@@ -26,26 +21,28 @@ jobs:
     - name: Install gdown
       run: pip install gdown
 
-    - name: Cache model
+    - name: Create model directory
+      run: mkdir -p ./model/OpenHermes-2.5-Mistral-7B-GGUF
+
+    - name: Cache model directory
       id: cache-model
       uses: actions/cache@v3
       with:
-        path: ./models
-        key: model-${{ hashFiles('**/lockfile') }}
+        path: ./model/OpenHermes-2.5-Mistral-7B-GGUF
+        key: model-${{ github.sha }}
         restore-keys: |
           model-
 
-    - name: Download Model from Google Drive
+    - name: Download .gguf file if not cached
       if: steps.cache-model.outputs.cache-hit != 'true'
       run: |
-        gdown 'https://drive.google.com/uc?id=${{ secrets.GOOGLE_DRIVE_FILE_ID_MISTRAL_MODEL }}' -O model.7z
-        7z x model.7z -o./models
+        gdown --id ${{ secrets.GOOGLE_DRIVE_FILE_ID_MISTRAL_MODEL }} -O ./model/OpenHermes-2.5-Mistral-7B-GGUF/openhermes-2.5-mistral-7b.Q4_K_M.gguf
 
-    - name: Check downloaded file
+    - name: Download config.json if not cached
       if: steps.cache-model.outputs.cache-hit != 'true'
       run: |
-        ls -lh model.7z
-        file model.7z
+        gdown --id ${{ secrets.GOOGLE_DRIVE_FILE_ID_MISTRAL_CONFIG }} -O ./model/OpenHermes-2.5-Mistral-7B-GGUF/config.json
+
 
     - name: Start Application Server
       run: |
