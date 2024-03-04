@@ -99,15 +99,11 @@ try:
         result = find_in_csv(filename=filename, lookup_value=lookup_value, column_name=chosen_feature)
 
         if len(result)>0:
-            print("*"*100)
             print(f"Lookup success: {lookup_value} in {chosen_feature}")
             print(result)
-            print("*"*100)
             print()
         else:
-            print("-"*100)
             print(f"Lookup fail: {lookup_value} in {chosen_feature}")
-            print("-"*100)
             print()
         print("```")
 except Exception as err:
