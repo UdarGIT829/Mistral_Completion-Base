@@ -21,7 +21,7 @@ def load_modules_from_folder(folder_path, blacklist=None):
     # Search for Python files recursively in the folder
     python_files = glob.glob(os.path.join(folder_path, '**', '*.py'), recursive=True)
     
-    # Filter out blacklisted files
+    # Filter blacklisted files
     python_files = [file for file in python_files if os.path.basename(file) not in blacklist and "_template.py" in os.path.basename(file)]
 
     for file_path in python_files:
