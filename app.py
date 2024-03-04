@@ -4,6 +4,13 @@ import modules.prompt_defs as prompt_defs
 
 app = Flask(__name__)
 
+# Define the health check endpoint
+@app.route('/health', methods=['POST'])
+def health_check():
+    # You can perform any necessary health checks here
+    # For simplicity, we're just returning a status message
+    return jsonify({'status': 'ok'}), 200
+
 @app.route('/completion', methods=['POST'])
 def tokenize_text():
     # Parse the JSON data from the request
