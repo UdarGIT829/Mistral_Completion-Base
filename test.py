@@ -2,7 +2,7 @@ import requests
 from pprint import pprint
 
 
-print("""#### Generic Template""")
+print("""### Generic Template""")
 
 reponse = requests.get(url="http://127.0.0.1:9001/get_instruct_prompts")
 
@@ -40,7 +40,7 @@ except Exception as err:
     raise(err)
     
     
-print("""#### CSV Parser""")
+print("""### CSV Parser""")
 
 
 import re
