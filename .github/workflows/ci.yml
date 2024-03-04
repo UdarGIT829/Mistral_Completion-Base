@@ -61,9 +61,35 @@ jobs:
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=${{ github.workspace }}" >> $GITHUB_ENV
 
-    - name: Run Tests
+    - name: Backup README
+      run: cp README.md README.backup.md
+
+    - name: Trim README after 'Production Examples'
       run: |
-        python3 test.py
+        sed -n '/### Production Results (Updated every push by Github Actions!)/q;p' README.md > README.tmp.md
+        mv README.tmp.md README.md
+
+    - name: Run tests and capture output
+      run: python test.py > test_output.txt
+
+    - name: Append test output to README if build succeeds
+      if: success()
+      run: |
+        echo '## Execution Results' >> README.md
+        cat test_output.txt >> README.md
+
+    - name: Restore README if build fails
+      if: failure()
+      run: mv README.backup.md README.md
+
+    - name: Commit and push README updates
+      if: success()
+      run: |
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        git add README.md
+        git commit -m "Update README with latest test execution results"
+        git push
     
     - name: Cleanup
       if: always()
