@@ -33,15 +33,18 @@ jobs:
         restore-keys: |
           model-
 
+    - name: Check Cache Status
+      run: echo "Cache hit status ${{ steps.cache-model.outputs.cache-hit }}"
+
     - name: Download .gguf file if not cached
       if: steps.cache-model.outputs.cache-hit != 'true'
       run: |
-        gdown --id ${{ secrets.GOOGLE_DRIVE_FILE_ID_MISTRAL_MODEL }} -O ./model/OpenHermes-2.5-Mistral-7B-GGUF/openhermes-2.5-mistral-7b.Q4_K_M.gguf
+        gdown --id ${{ secrets.MODEL_GGUF_FILE_ID }} -O ./model/OpenHermes-2.5-Mistral-7B-GGUF/openhermes-2.5-mistral-7b.Q4_K_M.gguf
 
     - name: Download config.json if not cached
       if: steps.cache-model.outputs.cache-hit != 'true'
       run: |
-        gdown --id ${{ secrets.GOOGLE_DRIVE_FILE_ID_MISTRAL_CONFIG }} -O ./model/OpenHermes-2.5-Mistral-7B-GGUF/config.json
+        gdown --id ${{ secrets.CONFIG_JSON_FILE_ID }} -O ./model/OpenHermes-2.5-Mistral-7B-GGUF/config.json
 
 
     - name: Start Application Server
@@ -54,6 +57,10 @@ jobs:
         sleep 10 # Wait for the server to start
         curl --retry 5 --retry-delay 10 --retry-connrefused http://localhost:9001/health -X POST -d '{"status":"ok"}' -H "Content-Type: application/json"
     
+    - name: Set PYTHONPATH
+      run: echo "PYTHONPATH=${{ github.workspace }}" >> $GITHUB_ENV
+
+
     - name: Run Tests
       run: |
         python3 test.py
