@@ -19,14 +19,11 @@ def mistral_completion(myText:str, config=None) -> dict:
     else:
         thisConfig = DEFAULT_CONFIG
         thisConfig.update(config)
-    try:
-        llm = CTransformers(model='models\OpenHermes-2.5-Mistral-7B-GGUF\openhermes-2.5-mistral-7b.Q4_K_M.gguf', model_type="mistral", gpu_layers=50, config=thisConfig)
+    llm = CTransformers(model='models\OpenHermes-2.5-Mistral-7B-GGUF\openhermes-2.5-mistral-7b.Q4_K_M.gguf', model_type="mistral", gpu_layers=50, config=thisConfig)
 
-        response_text = llm(myText)
+    response_text = llm(myText)
 
-        tokens = num_tokens_from_string(response_text, "davinci")
-    except Exception as err:
-        response_text = f"An error occured during text completion, probably an issue with ctransformers or langchain: {str(err)}"
+    tokens = num_tokens_from_string(response_text, "davinci")
     end_time = time.time() - start_time
     print(f"Generated {str(tokens)} tokens in: {end_time:.4f} seconds")
 
