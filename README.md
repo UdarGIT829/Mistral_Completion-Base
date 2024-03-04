@@ -1,8 +1,11 @@
 # Mistral_Completion-Base
-This is a modular text-completion server based on https://github.com/mistralai/mistral-src
 
 ## Overview
+This is a modular text-completion server based on https://github.com/mistralai/mistral-src
 
+By providing a barebones text-completion service via API, the systems for constructing prompts are free to control by a user. Currently available software for this purpose is geared towards being feature rich, and as a result becomes quite bloated. 
+
+To adapt the outputs to your purposes, you can create/modify an existing instruct template or make your own.
 
 ## Installation
 To install, run the following command:
@@ -11,7 +14,13 @@ pip install -r requirements.txt
 ```
 
 ## Usage
-See `test.py` for specific usage examples
+
+### Starting the application server
+```ps
+>   python app.py 
+```
+
+For further usage, see `test.py` for specific examples.
 
 ## Modules
 To extend functionality with your own module, you must make a `get_template()` function
