@@ -26,4 +26,97 @@ For further usage, see `test.py` for specific examples.
 To extend functionality with your own module, you must make a `get_template()` function
 See `.modules/instr_cls.py` for the class definition of the return type, or see `modules/template_module/generic_template.py` for a simplified example.
 ## Execution Results
+<<<<<<< HEAD
 #
+=======
+#### Generic Template
+'Processing query: Hello, how are you? I am under the water, please help me.'
+
+Using template: [INST] You are a helpful AI assistant. You will think outside of the box to help the user with their request:
+Hello, how are you? I am under the water, please help me.
+[/INST]
+Assistant: "
+
+
+Response status code: 200
+Response JSON:
+{'prompt': '[INST] You are a helpful AI assistant. You will think outside of '
+           'the box to help the user with their request:\n'
+           'Hello, how are you? I am under the water, please help me.\n'
+           '[/INST]\n'
+           'Assistant: "\n',
+ 'text': '" Hello! Firstly, don\'t worry. It seems like you might be in a '
+         'situation where you need some assistance. Can you tell me more about '
+         "what's going on or the exact situation that you're facing? The more "
+         'information I have, the better equipped I am to help you. Remember, '
+         'I\'m here to assist you in any way I can."\n'
+         '"',
+ 'tokens': 74}
+=_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_=
+#### CSV Parser
+Processing Query: Get data about Theo
+****************************************************************************************************
+Lookup success: Theo in Name
+[{'Name': 'Theo', 'Age': '28', 'Body Temperature': '95', 'Wealth': 'Low'}]
+****************************************************************************************************
+
+Processing Query: Get data about Viraat
+Retrying bad selection: Column  Name
+Retrying bad selection:   Name
+----------------------------------------------------------------------------------------------------
+Lookup fail: Viraat in Name
+----------------------------------------------------------------------------------------------------
+
+Processing Query: Get data about 30 year olds
+Retrying bad selection: Age   The relevant column is Age because it contains information about the age of individuals
+Retrying bad selection: Age The search was done using the Age column because it directly relates to the user s query for information about individuals aged    years old
+****************************************************************************************************
+Lookup success: 30 in Age
+[{'Name': 'Harry Kane', 'Age': '30', 'Body Temperature': '95', 'Wealth': 'Medium'}]
+****************************************************************************************************
+Lookup success: 30 in Age
+[{'Name': 'Harry Kane', 'Age': '30', 'Body Temperature': '95', 'Wealth': 'Medium'}]
+
+```
+## Execution Results
+#### Generic Template
+```
+'Processing query: Hello, how are you? I am under the water, please help me.'
+
+Using template: [INST] You are a helpful AI assistant. You will think outside of the box to help the user with their request:
+Hello, how are you? I am under the water, please help me.
+[/INST]
+Assistant: "
+
+
+Response status code: 200
+Response JSON:
+{'prompt': '[INST] You are a helpful AI assistant. You will think outside of '
+           'the box to help the user with their request:\n'
+           'Hello, how are you? I am under the water, please help me.\n'
+           '[/INST]\n'
+           'Assistant: "\n',
+ 'text': 'Oh dear! It seems like you might be in an unconventional situation. '
+         'Is there anything specific that you require my assistance with?"',
+ 'tokens': 25}
+=_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_=
+```
+#### CSV Parser
+```
+Processing Query: Get data about Theo
+Lookup success: Theo in Name
+[{'Name': 'Theo', 'Age': '28', 'Body Temperature': '95', 'Wealth': 'Low'}]
+
+```
+```
+Processing Query: Get data about Viraat
+Lookup fail: Viraat in Name
+
+```
+```
+Processing Query: Get data about 30 year olds
+Lookup success: 30 in Age
+[{'Name': 'Harry Kane', 'Age': '30', 'Body Temperature': '95', 'Wealth': 'Medium'}]
+
+```
+>>>>>>> 2a92bdf09057a3fcf739e525e92a3dcda33eb045
