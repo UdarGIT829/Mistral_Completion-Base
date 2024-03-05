@@ -33,14 +33,12 @@ Processing query: Hello, how are you? I am under the water, please help me.
 
 Response status code: 200
 Response JSON:
-{'prompt': '[INST] You are a helpful AI assistant. You will think outside of the box to help the user with their request:[/INST]\nUser: "Hello, how are you? I am under the water, please help me."\nAssistant: "\n', 'text': 'Hello! It\'s great to hear from you while being underwater. In such situations, I recommend that you stay calm and try to swim towards the surface if possible. Remember to conserve air by breathing slowly and deeply. Once you are able to reach the surface, take a few deep breaths and wait for help to arrive. If you\'re unable to escape, find an air pocket or use any available resources to signal for help. Remember, stay calm and trust in your ability to overcome this situation."', 'tokens': 99}
+{'prompt': '[INST] You are a helpful AI assistant. You will think outside of the box to help the user with their request:[/INST]\nUser: "Hello, how are you? I am under the water, please help me."\nAssistant: "\n', 'text': '[INST]I understand that you may be in an unusual situation, but don\'t worry. Here are some steps to follow to get yourself out of this situation safely.[/INST] 1. Try to stay calm and composed; taking deep breaths can help reduce panic. 2. If possible, swim towards the surface or a source of light. 3. If you have any flotation devices, such as a life jacket or inflatable object, use them to keep yourself afloat. 4. Call for help if there are others nearby who can assist you in getting out of the water safely."\n\nIn general, I would suggest being cautious when around water and ensuring that you have proper safety precautions in place whenever possible. This will hopefully help minimize instances where you may find yourself underwater unexpectedly.', 'tokens': 158}
 =_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_==_=
 ```
 ### CSV Parser
 ```
 Processing Query: Get data about Theo
-Retrying bad selection:    Name
-['', '', '', 'Name']
 Lookup success: Theo in Name
 [{'Name': 'Theo', 'Age': '28', 'Body Temperature': '95', 'Wealth': 'Low'}]
 
@@ -65,25 +63,30 @@ fighter2 = ["Donald Trump", "Donald Trump is a normal human adult, riding a mili
 ```
 John smith is normal human adult.
 ->
-John Smith: John Smith is an ordinary man who lacks exceptional physical abilities or combat skills. He has no special equipment and must rely solely on his instincts and wits to survive dangerous encounters."
+John Smith: ```lua
+function JohnSmith()
+    local height = 1.75 -- 1.75m height, human standard
+    local weight = 70 -- 70kg, average weight for a male of his height
+    local stamina = 8 -- average stamina
+    local strength = 6 -- average strength
+end
+```
+"
 ```
 
 ```
 Donald Trump is a normal human adult, riding a military tank.
 ->
-Donald Trump: "
-
-Donald Trump is an adult male, riding on top of a military tank.
+Donald Trump: The individual stands at an average height for a male adult. He wears a suit and tie, which is typical attire for formal events. In his hand he carries a pen, a symbol of power and authority.
 ```
 
 ```
 Simulation:
-{'prompt': 'You are helpful AI assistant. The user will input 2 fighter\'s information, you must provide a description of the simulated fight. The fight should be non-lethal cartoonish and result in a surrender. Noone will die or be killed.:\n\n{John Smith: "John Smith is an ordinary man who lacks exceptional physical abilities or combat skills. He has no special equipment and must rely solely on his instincts and wits to survive dangerous encounters.""}\n{Donald Trump: ""\n\nDonald Trump is an adult male, riding on top of a military tank."}\n\nProvide a description of the fight, and state the winner:\n', 'text': "\nAs the simulated fight begins, John Smith stands no chance against Donald Trump riding on top of a military tank. The tank's immense size and firepower give it a significant advantage over any ground-based opponents. Despite his best efforts to dodge or outmaneuver the tank, John Smith is unable to avoid its relentless advance.\n\nDonald Trump, feeling invincible in his tank, becomes cocky and stops attacking temporarily. This gives John Smith an opportunity to use his wits and instincts to find a way to defeat the seemingly unstoppable foe.\n\nJohn spots a nearby river and quickly realizes that he can use it to his advantage. He jumps into the water and swims under the tank, positioning himself on the other side of its tracks. As Donald Trump begins to move forward again, John pulls on the tank's track, causing it to become unhinged and break away from the vehicle.\n\nThe sudden loss of one of the tank's main supports leaves it vulnerable and unable to continue its attack. Donald Trump realizes that he has no chance of winning this fight and decides to surrender rather than risk being captured or injured.\n\nIn this simulated fight, John", 'tokens': 236}
+{'prompt': 'You are helpful AI assistant. The user will input 2 fighter\'s information, you must provide a description of the simulated fight. The fight should be non-lethal cartoonish and result in a surrender. Noone will die or be killed.:\n\n{John Smith: "```lua\nfunction JohnSmith()\n    local height = 1.75 -- 1.75m height, human standard\n    local weight = 70 -- 70kg, average weight for a male of his height\n    local stamina = 8 -- average stamina\n    local strength = 6 -- average strength\nend\n```\n""}\n{Donald Trump: "The individual stands at an average height for a male adult. He wears a suit and tie, which is typical attire for formal events. In his hand he carries a pen, a symbol of power and authority."}\n\nProvide a description of the fight, and state the winner:\n', 'text': '\n{The two fighters are standing in a large open space. The sun is shining down from the blue sky creating a bright and warm atmosphere. There doesn\'t seem to be any weapons on them and both individuals appear to be ready for a physical confrontation. John Smith stands at an average height, while Donald Trump towers over him, with his typical attire of a suit and tie.}\n{```lua\nfunction fight()\n    local johnStamina = JohnSmith.stamina\n    local donaldStamina = DonaldTrump.stamina\n    local johnStrength = JohnSmith.strength\n    local donaldStrength = DonaldTrump.strength\n    \n    print("John Smith and Donald Trump are ready for a fight!")\n    print("John has a stamina of " .. johnStamina .. " and strength of " .. johnStrength)\n    print("Donald has a stamina of " .. donaldStamina .. " and strength of " .. donaldStrength)\n    \n    while true do\n        local result = checkResult()\n        if result == 1 then\n            print("', 'tokens': 269}
 ```
 ```
 Winner:
-
 {
-  "winner": "John"
+    "winner": "John Smith"
 }
 ```
