@@ -23,6 +23,7 @@ def mistral_completion(myText:str, config=None) -> dict:
 
     response_text = llm(myText)
 
+    # Okay you caught me, but tiktoken doesn't have a mistral option
     tokens = num_tokens_from_string(response_text, "davinci")
     end_time = time.time() - start_time
     print(f"Generated {str(tokens)} tokens in: {end_time:.4f} seconds")
